@@ -4,6 +4,7 @@ import { FavoriteButton } from "@/components/favorite-button";
 import { OpenToolButton } from "@/components/open-tool-button";
 import { ToolLogo } from "@/components/tool-logo";
 import { getCategoryLabel } from "@/data/categories";
+import { routes } from "@/lib/routes";
 import type { Tool } from "@/types/tool";
 
 /**
@@ -14,7 +15,7 @@ import type { Tool } from "@/types/tool";
 export function ToolCard({ tool }: { tool: Tool }) {
   return (
     <Link
-      href={`/tools/${tool.slug}`}
+      href={routes.tool(tool.slug)}
       className="group flex flex-col gap-4 rounded-xl border border-border bg-bg-subtle p-4 transition-colors hover:border-border-strong hover:bg-bg-muted"
     >
       <div className="flex items-start justify-between gap-3">

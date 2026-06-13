@@ -10,6 +10,7 @@ import { ToolGrid } from "@/components/tool-grid";
 import { ToolLogo } from "@/components/tool-logo";
 import { getCategoryLabel } from "@/data/categories";
 import { getToolBySlug, TOOLS } from "@/data/tools";
+import { routes } from "@/lib/routes";
 
 export function generateStaticParams() {
   return TOOLS.map((t) => ({ slug: t.slug }));
@@ -48,7 +49,7 @@ export default async function ToolDetailPage({
   return (
     <>
       <Link
-        href="/tools"
+        href={routes.tools}
         className="mb-6 inline-flex items-center gap-2 text-sm text-fg-muted transition-colors hover:text-fg"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden />
@@ -69,7 +70,7 @@ export default async function ToolDetailPage({
                   {tool.categories.map((c) => (
                     <Link
                       key={c}
-                      href={`/category/${c}`}
+                      href={routes.category(c)}
                       className="rounded-md bg-bg-muted px-2 py-1 text-xs text-fg-muted transition-colors hover:text-fg"
                     >
                       {getCategoryLabel(c)}

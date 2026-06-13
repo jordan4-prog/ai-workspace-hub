@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { AppShell } from "@/components/app-shell";
-import { WorkspaceProvider } from "@/lib/workspace-context";
-
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -21,11 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`dark ${inter.variable}`}>
-      <body className="font-sans">
-        <WorkspaceProvider>
-          <AppShell>{children}</AppShell>
-        </WorkspaceProvider>
-      </body>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

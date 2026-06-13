@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ToolLogo } from "@/components/tool-logo";
 import { getCategoryLabel } from "@/data/categories";
 import { searchTools } from "@/data/tools";
+import { routes } from "@/lib/routes";
 
 const MAX_RESULTS = 6;
 
@@ -75,7 +76,7 @@ export function GlobalSearch() {
               {results.map((tool) => (
                 <li key={tool.slug}>
                   <Link
-                    href={`/tools/${tool.slug}`}
+                    href={routes.tool(tool.slug)}
                     onClick={() => {
                       setOpen(false);
                       setQuery("");
