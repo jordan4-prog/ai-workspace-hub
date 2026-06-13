@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock, LayoutDashboard, Sparkles, Star, Grid3x3 } from "lucide-react";
+import { Clock, LayoutDashboard, Sparkles, Star, Grid3x3, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -16,7 +16,7 @@ const PRIMARY_NAV = [
   { href: "/tools", label: "Todas las Herramientas", icon: Grid3x3 },
 ] as const;
 
-export function Sidebar() {
+export function Sidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
   const { favorites, ready } = useWorkspace();
 
@@ -32,6 +32,16 @@ export function Sidebar() {
         <span className="text-sm font-semibold tracking-tight text-fg">
           AI Workspace Hub
         </span>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar menú"
+            className="ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg text-fg-muted hover:bg-bg-muted hover:text-fg md:hidden"
+          >
+            <X className="h-4 w-4" aria-hidden />
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 pb-6">
