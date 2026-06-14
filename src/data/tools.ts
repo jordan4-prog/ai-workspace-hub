@@ -1520,8 +1520,13 @@ export function getToolsByCategory(categoryId: CategoryId): Tool[] {
  * Para 162 → "+100". Dinámico: escala solo conforme crece el catálogo y no
  * hay que actualizarlo al añadir o quitar herramientas.
  */
+/** Valor numérico del conteo aproximado (centena inferior). Para 162 → 100. */
+export function approxToolCountValue(): number {
+  return Math.floor(TOOLS.length / 100) * 100;
+}
+
 export function approxToolCount(): string {
-  const floored = Math.floor(TOOLS.length / 100) * 100;
+  const floored = approxToolCountValue();
   return floored >= 100 ? `+${floored}` : String(TOOLS.length);
 }
 

@@ -12,8 +12,9 @@ import Link from "next/link";
 
 import { CategoryIcon } from "@/components/category-icon";
 import { Hero } from "@/components/landing/hero";
+import { LandingStats } from "@/components/landing/landing-stats";
 import { CATEGORIES } from "@/data/categories";
-import { approxToolCount, TOOLS } from "@/data/tools";
+import { TOOLS } from "@/data/tools";
 import { routes } from "@/lib/routes";
 
 export const metadata: Metadata = {
@@ -77,25 +78,8 @@ export default function LandingPage() {
       {/* Hero (cliente: animaciones con Framer Motion) */}
       <Hero />
 
-      {/* Estadísticas */}
-      <section className="border-y border-border bg-bg-subtle">
-        <div className="mx-auto grid max-w-4xl grid-cols-3 divide-x divide-border px-4 sm:px-6">
-          {[
-            { value: approxToolCount(), label: "Herramientas" },
-            { value: CATEGORIES.length, label: "Categorías" },
-            { value: "100%", label: "Gratis" },
-          ].map((s) => (
-            <div key={s.label} className="px-2 py-8 text-center">
-              <p className="text-2xl font-semibold text-fg sm:text-3xl">
-                {s.value}
-              </p>
-              <p className="mt-1 text-xs text-fg-subtle sm:text-sm">
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Estadísticas (cliente: contadores animados al hacer scroll) */}
+      <LandingStats />
 
       {/* Características */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
