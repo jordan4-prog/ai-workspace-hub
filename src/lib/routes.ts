@@ -15,4 +15,5 @@ export const routes = {
   category: (id: string) => `/app/category/${id}`,
   favorites: "/app/favorites",
   recents: "/app/recents",
+  collection: (id: string) => `/app/collections/${id}`,
 } as const;

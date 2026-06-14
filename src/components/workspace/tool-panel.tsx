@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FavoriteButton } from "@/components/favorite-button";
 import { OpenToolButton } from "@/components/open-tool-button";
 import { ToolLogo } from "@/components/tool-logo";
+import { CollectionPicker } from "@/components/workspace/collection-picker";
 import { getCategoryLabel } from "@/data/categories";
 import {
   getPricing,
@@ -271,8 +272,9 @@ export function ToolPanel() {
                     <FavoriteButton slug={activeTool.slug} />
                   </div>
 
-                  <div className="mt-6">
+                  <div className="mt-6 flex flex-wrap items-center gap-3">
                     <OpenToolButton tool={activeTool} variant="primary" />
+                    <CollectionPicker slug={activeTool.slug} />
                   </div>
 
                   {/* Descripción */}
