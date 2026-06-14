@@ -4,6 +4,7 @@ import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+import { HeroSearch } from "@/components/landing/hero-search";
 import { ToolLogo } from "@/components/tool-logo";
 import { approxToolCount, resolveTools } from "@/data/tools";
 import { routes } from "@/lib/routes";
@@ -124,6 +125,11 @@ export function Hero() {
           >
             Ver herramientas
           </Link>
+        </motion.div>
+
+        {/* Búsqueda interactiva */}
+        <motion.div variants={fadeUp} className="mt-10">
+          <HeroSearch />
         </motion.div>
 
         {/* Iconos flotantes */}
