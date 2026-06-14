@@ -1,16 +1,20 @@
 import { AppShell } from "@/components/app-shell";
+import { AuthProvider } from "@/lib/auth-context";
 import { WorkspaceProvider } from "@/lib/workspace-context";
 
 /**
  * Layout del workspace (todo lo que cuelga de /app).
  *
- * Aquí viven el estado del Workspace (favoritos/recientes) y el shell con la
- * sidebar. La landing pública en "/" usa solo el root layout, sin esto.
+ * Provee la sesión (AuthProvider) y el estado del Workspace, que elige entre
+ * Supabase (con sesión) o localStorage (anónimo). La landing pública en "/"
+ * usa solo el root layout, sin esto.
  */
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <WorkspaceProvider>
-      <AppShell>{children}</AppShell>
-    </WorkspaceProvider>
+    <AuthProvider>
+      <WorkspaceProvider>
+        <AppShell>{children}</AppShell>
+      </WorkspaceProvider>
+    </AuthProvider>
   );
 }

@@ -10,64 +10,78 @@ import {
   type ReactNode,
 } from "react";
 
+import { useAuth } from "@/lib/auth-context";
 import { LocalStorageProvider } from "@/lib/storage/local-storage-provider";
 import type {
   RecentEntry,
   StorageProvider,
 } from "@/lib/storage/storage-provider";
+import { SupabaseStorageProvider } from "@/lib/storage/supabase-storage-provider";
+import { supabase } from "@/lib/supabase/client";
 
 interface WorkspaceContextValue {
   favorites: string[];
   recents: RecentEntry[];
   /** True hasta que se hidrata el estado desde el provider (evita parpadeos). */
   ready: boolean;
+  /** True cuando los datos viven en la nube (usuario con sesión). */
+  cloud: boolean;
   isFavorite: (slug: string) => boolean;
   toggleFavorite: (slug: string) => void;
-  /** Registra un acceso a la herramienta (para "Recientes"). */
   recordAccess: (slug: string) => void;
 }
 
 const WorkspaceContext = createContext<WorkspaceContextValue | null>(null);
 
 /**
- * Proveedor de estado del Workspace.
+ * Estado del Workspace (favoritos + recientes).
  *
- * Recibe el `StorageProvider` por inyección (por defecto, localStorage). En la
- * fase cloud bastará con pasar otra implementación —p. ej. desde un layout
- * autenticado— sin tocar ningún componente consumidor.
+ * Elige el `StorageProvider` según la sesión:
+ * - Con usuario autenticado → Supabase (sincroniza entre dispositivos).
+ * - Sin sesión → localStorage (modo anónimo, como siempre).
+ *
+ * La primera vez que un usuario inicia sesión, migra sus datos locales a la
+ * nube (merge) para que no pierda lo que ya tenía guardado.
  */
-export function WorkspaceProvider({
-  children,
-  provider,
-}: {
-  children: ReactNode;
-  provider?: StorageProvider;
-}) {
-  // Singleton estable durante el ciclo de vida del componente.
-  const storage = useMemo(
-    () => provider ?? new LocalStorageProvider(),
-    [provider],
-  );
+export function WorkspaceProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  const cloud = Boolean(user && supabase);
+
+  const storage = useMemo<StorageProvider>(() => {
+    if (user && supabase) {
+      return new SupabaseStorageProvider(supabase, user.id);
+    }
+    return new LocalStorageProvider();
+  }, [user]);
 
   const [favorites, setFavorites] = useState<string[]>([]);
   const [recents, setRecents] = useState<RecentEntry[]>([]);
   const [ready, setReady] = useState(false);
 
-  // Hidratación inicial: solo en cliente, tras el montaje.
   useEffect(() => {
     let active = true;
-    void Promise.all([storage.getFavorites(), storage.getRecents()]).then(
-      ([favs, recs]) => {
-        if (!active) return;
-        setFavorites(favs);
-        setRecents(recs);
-        setReady(true);
-      },
-    );
+    setReady(false);
+
+    async function init() {
+      // Migración local → nube (una sola vez por usuario).
+      if (user && supabase && storage instanceof SupabaseStorageProvider) {
+        await migrateLocalToCloud(user.id, storage);
+      }
+      const [favs, recs] = await Promise.all([
+        storage.getFavorites(),
+        storage.getRecents(),
+      ]);
+      if (!active) return;
+      setFavorites(favs);
+      setRecents(recs);
+      setReady(true);
+    }
+
+    void init();
     return () => {
       active = false;
     };
-  }, [storage]);
+  }, [storage, user]);
 
   const toggleFavorite = useCallback(
     (slug: string) => {
@@ -97,11 +111,12 @@ export function WorkspaceProvider({
       favorites,
       recents,
       ready,
+      cloud,
       isFavorite,
       toggleFavorite,
       recordAccess,
     }),
-    [favorites, recents, ready, isFavorite, toggleFavorite, recordAccess],
+    [favorites, recents, ready, cloud, isFavorite, toggleFavorite, recordAccess],
   );
 
   return (
@@ -109,6 +124,43 @@ export function WorkspaceProvider({
       {children}
     </WorkspaceContext.Provider>
   );
+}
+
+/** Sube los favoritos/recientes de localStorage a la nube la primera vez. */
+async function migrateLocalToCloud(
+  userId: string,
+  cloudStorage: SupabaseStorageProvider,
+): Promise<void> {
+  const flag = `awh:migrated:${userId}`;
+  if (typeof window === "undefined") return;
+  try {
+    if (window.localStorage.getItem(flag)) return;
+  } catch {
+    return;
+  }
+
+  const local = new LocalStorageProvider();
+  const [localFavs, localRecs, cloudFavs] = await Promise.all([
+    local.getFavorites(),
+    local.getRecents(),
+    cloudStorage.getFavorites(),
+  ]);
+
+  for (const slug of localFavs) {
+    if (!cloudFavs.includes(slug)) {
+      await cloudStorage.toggleFavorite(slug);
+    }
+  }
+  // De más antiguo a más nuevo, para preservar el orden de los recientes.
+  for (const entry of [...localRecs].reverse()) {
+    await cloudStorage.recordAccess(entry.slug);
+  }
+
+  try {
+    window.localStorage.setItem(flag, "1");
+  } catch {
+    // Si no se puede marcar, en el peor caso se re-migra (es idempotente).
+  }
 }
 
 export function useWorkspace(): WorkspaceContextValue {

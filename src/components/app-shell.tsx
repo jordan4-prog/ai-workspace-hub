@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 
+import { AuthButton } from "@/components/auth/auth-button";
 import { GlobalSearch } from "@/components/global-search";
 import { Sidebar } from "@/components/sidebar";
 import { cn } from "@/lib/utils";
@@ -70,6 +71,8 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Menu className="h-5 w-5" aria-hidden />
           </button>
           <GlobalSearch />
+          <div className="ml-auto" />
+          <AuthButton />
         </header>
         <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8">
           <div className="mx-auto max-w-7xl">{children}</div>
