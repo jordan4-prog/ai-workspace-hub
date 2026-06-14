@@ -1,3 +1,4 @@
+import { FeaturedTools } from "@/components/workspace/featured-tools";
 import { ToolsExplorer } from "@/components/workspace/tools-explorer";
 import { ToolsHero } from "@/components/workspace/tools-hero";
 
@@ -9,6 +10,7 @@ export default function AllToolsPage() {
   return (
     <>
       <ToolsHero />
+      <FeaturedTools />
       <ToolsExplorer />
     </>
   );
