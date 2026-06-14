@@ -67,9 +67,20 @@ body {
     0 0 48px rgba(91, 74, 237, 0.35);
 }
 
-/* Respeta la preferencia del sistema de movimiento reducido. */
+/* Respeta la preferencia del sistema de movimiento reducido: desactiva el
+ * gradiente animado y reduce al mínimo cualquier animación/transición CSS
+ * (pulse del badge, etc.). Las animaciones de Framer Motion ya se gestionan
+ * por componente con useReducedMotion. */
 @media (prefers-reduced-motion: reduce) {
   .animated-gradient {
     animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

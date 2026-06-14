@@ -114,14 +114,14 @@ export function Hero() {
         >
           <Link
             href={routes.dashboard}
-            className="group inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#5B4AED] to-[#7C3AED] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#5B4AED]/30 transition-all duration-200 hover:scale-[1.03] hover:shadow-xl hover:shadow-[#7C3AED]/40 hover:brightness-110 sm:w-auto"
+            className="group inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#5B4AED] to-[#7C3AED] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#5B4AED]/30 transition-all duration-200 hover:scale-[1.03] hover:shadow-xl hover:shadow-[#7C3AED]/40 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f0f1e] sm:w-auto"
           >
             Abrir workspace
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </Link>
           <Link
             href={routes.tools}
-            className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-fg backdrop-blur transition-all duration-200 hover:scale-[1.03] hover:border-white/30 hover:bg-white/10 sm:w-auto"
+            className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-fg backdrop-blur transition-all duration-200 hover:scale-[1.03] hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:w-auto"
           >
             Ver herramientas
           </Link>

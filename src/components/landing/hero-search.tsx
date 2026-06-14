@@ -65,6 +65,13 @@ export function HeroSearch() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setQuery("");
+              setFocused(false);
+              e.currentTarget.blur();
+            }
+          }}
           placeholder={`Prueba a buscar: ${PLACEHOLDERS[phIndex]}…`}
           className="w-full bg-transparent text-sm text-fg outline-none placeholder:text-fg-subtle sm:text-base"
           aria-label="Buscar herramientas de IA"
@@ -84,7 +91,7 @@ export function HeroSearch() {
               setQuery(chip);
               setFocused(true);
             }}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-fg-muted transition-colors hover:border-white/25 hover:text-fg"
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-fg-muted transition-colors hover:border-white/25 hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/60"
           >
             {chip}
           </button>
