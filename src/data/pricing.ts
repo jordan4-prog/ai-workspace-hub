@@ -18,6 +18,7 @@ const FREE = new Set<string>([
   "llama",
   "flux",
   "upscayl",
+  "gemma",
 ]);
 
 /** De pago o enterprise, sin una capa gratuita útil (solo prueba/demo). */

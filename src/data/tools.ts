@@ -1499,6 +1499,62 @@ export const TOOLS: readonly Tool[] = [
     categories: ["recursos-humanos"],
     tags: ["reclutamiento", "ats", "sourcing"],
   },
+
+  // === Modelos / labs (añadidos desde el directorio) ===
+  {
+    slug: "qwen",
+    name: "Qwen",
+    url: "https://chat.qwen.ai",
+    description:
+      "Familia de modelos de Alibaba (Qwen) para chat, código y multimodal, con versiones abiertas potentes.",
+    categories: ["chatbots", "programacion"],
+    tags: ["alibaba", "qwen", "open", "llm"],
+  },
+  {
+    slug: "glm",
+    name: "GLM (Z.ai)",
+    url: "https://z.ai",
+    description:
+      "Modelos GLM de Zhipu AI (Z.ai), fuertes en razonamiento y código agéntico, con opciones abiertas.",
+    categories: ["chatbots", "programacion"],
+    tags: ["zhipu", "glm", "open", "llm"],
+  },
+  {
+    slug: "ernie",
+    name: "ERNIE Bot",
+    url: "https://yiyan.baidu.com",
+    description:
+      "Modelo insignia de Baidu (ERNIE): asistente conversacional multimodal con fuerte rendimiento en chino.",
+    categories: ["chatbots"],
+    tags: ["baidu", "ernie", "llm", "multimodal"],
+  },
+  {
+    slug: "minimax",
+    name: "MiniMax",
+    url: "https://www.minimax.io",
+    description:
+      "Laboratorio de IA con modelos de texto, voz y vídeo (Hailuo), accesibles por chat y API.",
+    categories: ["chatbots", "video", "audio"],
+    tags: ["hailuo", "modelos", "video", "voz"],
+  },
+  {
+    slug: "stable-audio",
+    name: "Stable Audio",
+    url: "https://www.stableaudio.com",
+    description:
+      "Generación de música y efectos de sonido con IA de Stability AI a partir de texto.",
+    categories: ["audio", "musica"],
+    tags: ["música", "audio", "stability", "generador"],
+  },
+  {
+    slug: "gemma",
+    name: "Gemma",
+    url: "https://ai.google.dev/gemma",
+    description:
+      "Familia de modelos abiertos y ligeros de Google, derivados de la investigación de Gemini.",
+    categories: ["programacion", "chatbots"],
+    tags: ["google", "open-source", "modelo", "ligero"],
+  },
 ] as const;
 
 // --- Selectores de solo lectura sobre el catálogo --------------------------
