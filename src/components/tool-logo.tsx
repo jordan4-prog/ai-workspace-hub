@@ -47,6 +47,7 @@ function domainFromUrl(url: string): string {
 }
 
 const SIZES = {
+  xs: { box: "h-5 w-5 rounded-md text-[8px]", pad: "p-0.5" },
   sm: { box: "h-9 w-9 rounded-lg text-xs", pad: "p-1" },
   md: { box: "h-11 w-11 rounded-xl text-sm", pad: "p-1.5" },
   lg: { box: "h-16 w-16 rounded-2xl text-lg", pad: "p-2.5" },
@@ -63,7 +64,7 @@ export function ToolLogo({
   className,
 }: {
   tool: Tool;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   className?: string;
 }) {
   const [failed, setFailed] = useState(false);
