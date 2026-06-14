@@ -33,13 +33,36 @@ export function ToolCard({ tool }: { tool: Tool }) {
     router.push(`${pathname}?toolId=${tool.slug}`, { scroll: false });
   };
 
+  // Spotlight que sigue al cursor (vía CSS vars, sin re-render de React).
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--spot-x", `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty("--spot-y", `${e.clientY - r.top}px`);
+  };
+
   return (
     <Link
       href={routes.tool(tool.slug)}
       onClick={handleClick}
-      className="group flex flex-col gap-3 rounded-2xl border border-border bg-bg-subtle p-5 transition-all duration-200 hover:-translate-y-1 hover:border-accent/40 hover:bg-bg-muted hover:shadow-xl hover:shadow-accent-glow"
+      onMouseMove={handleMouseMove}
+      className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-bg-subtle p-5 transition-all duration-200 hover:-translate-y-1 hover:border-accent/40 hover:bg-bg-muted hover:shadow-xl hover:shadow-accent-glow"
     >
-      <div className="flex items-start justify-between gap-3">
+      {/* Spotlight cian que sigue al cursor */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(240px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(34,211,238,0.12), transparent 60%)",
+        }}
+      />
+      {/* Línea de acento superior al hover */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-px bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      />
+
+      <div className="relative z-10 flex items-start justify-between gap-3">
         <ToolLogo tool={tool} size="md" />
         <div className="flex items-center gap-1.5">
           <span
@@ -54,7 +77,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
         </div>
       </div>
 
-      <div className="flex-1">
+      <div className="relative z-10 flex-1">
         <h3 className="font-display text-lg font-semibold tracking-tight text-fg">
           {tool.name}
         </h3>

@@ -218,13 +218,20 @@ function Chip({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "rounded-full border px-3 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50",
+        "relative rounded-full border px-3 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50",
         active
-          ? "border-accent bg-accent-soft text-accent"
+          ? "border-transparent text-accent"
           : "border-border bg-bg-subtle text-fg-muted hover:border-border-strong hover:text-fg",
       )}
     >
-      {children}
+      {active && (
+        <motion.span
+          layoutId="activeChip"
+          transition={{ type: "spring", stiffness: 400, damping: 32 }}
+          className="absolute inset-0 rounded-full border border-accent bg-accent-soft"
+        />
+      )}
+      <span className="relative z-10">{children}</span>
     </button>
   );
 }
