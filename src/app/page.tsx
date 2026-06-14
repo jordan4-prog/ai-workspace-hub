@@ -11,9 +11,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CategoryIcon } from "@/components/category-icon";
-import { ToolLogo } from "@/components/tool-logo";
+import { Hero } from "@/components/landing/hero";
 import { CATEGORIES } from "@/data/categories";
-import { approxToolCount, resolveTools, TOOLS } from "@/data/tools";
+import { approxToolCount, TOOLS } from "@/data/tools";
 import { routes } from "@/lib/routes";
 
 export const metadata: Metadata = {
@@ -23,22 +23,6 @@ export const metadata: Metadata = {
 };
 
 const GITHUB_URL = "https://github.com/kakealfaro4-prog/ai-workspace-hub";
-
-// Logos reconocibles para el escaparate del hero.
-const HERO_TOOLS = resolveTools([
-  "chatgpt",
-  "claude",
-  "gemini",
-  "perplexity",
-  "cursor",
-  "midjourney",
-  "runway",
-  "elevenlabs",
-  "suno",
-  "canva",
-  "github-copilot",
-  "notion-ai",
-]);
 
 const FEATURES = [
   {
@@ -90,60 +74,8 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div
-          className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[820px] -translate-x-1/2 rounded-full opacity-20 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, #6366f1 0%, transparent 65%)",
-          }}
-          aria-hidden
-        />
-        <div className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-bg-subtle px-3 py-1 text-xs text-fg-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            {approxToolCount()} herramientas de IA en un solo lugar
-          </span>
-
-          <h1 className="mt-6 text-4xl font-semibold tracking-tight text-fg sm:text-6xl">
-            Todas las herramientas de IA.
-            <br />
-            <span className="bg-gradient-to-r from-accent to-purple-400 bg-clip-text text-transparent">
-              Un único lugar.
-            </span>
-          </h1>
-
-          <p className="mx-auto mt-5 max-w-xl text-base text-fg-muted sm:text-lg">
-            Deja de recordar decenas de páginas web y de saltar entre pestañas.
-            Accede, organiza y abre las mejores herramientas de inteligencia
-            artificial desde un espacio rápido y minimalista.
-          </p>
-
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href={routes.dashboard}
-              className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover sm:w-auto"
-            >
-              Abrir workspace
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-            <Link
-              href={routes.tools}
-              className="inline-flex w-full items-center justify-center rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-fg-muted transition-colors hover:border-border-strong hover:text-fg sm:w-auto"
-            >
-              Ver herramientas
-            </Link>
-          </div>
-
-          {/* Escaparate de logos */}
-          <div className="mt-14 flex flex-wrap items-center justify-center gap-3">
-            {HERO_TOOLS.map((tool) => (
-              <ToolLogo key={tool.slug} tool={tool} size="md" />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Hero (cliente: animaciones con Framer Motion) */}
+      <Hero />
 
       {/* Estadísticas */}
       <section className="border-y border-border bg-bg-subtle">

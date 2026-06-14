@@ -31,3 +31,45 @@ body {
 *::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* ── Animaciones de la landing ──────────────────────────────────────────── */
+
+/* Gradiente de fondo que se desplaza lentamente (azul → púrpura → oscuro). */
+.animated-gradient {
+  background: linear-gradient(
+    130deg,
+    #0f0f1e 0%,
+    #1a1740 28%,
+    #3b2a8c 50%,
+    #1a1740 72%,
+    #0f0f1e 100%
+  );
+  background-size: 220% 220%;
+  animation: gradient-pan 18s ease infinite;
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Glow suave para palabras clave del título. */
+.text-glow {
+  text-shadow:
+    0 0 24px rgba(124, 58, 237, 0.55),
+    0 0 48px rgba(91, 74, 237, 0.35);
+}
+
+/* Respeta la preferencia del sistema de movimiento reducido. */
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
