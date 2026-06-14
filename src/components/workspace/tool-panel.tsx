@@ -10,6 +10,7 @@ import { FavoriteButton } from "@/components/favorite-button";
 import { OpenToolButton } from "@/components/open-tool-button";
 import { ToolLogo } from "@/components/tool-logo";
 import { CollectionPicker } from "@/components/workspace/collection-picker";
+import { ReviewsSection } from "@/components/workspace/reviews-section";
 import { getCategoryLabel } from "@/data/categories";
 import {
   getPricing,
@@ -314,6 +315,9 @@ export function ToolPanel() {
                       </p>
                     </div>
                   </Section>
+
+                  {/* Reseñas reales de la comunidad */}
+                  <ReviewsSection slug={activeTool.slug} />
 
                   {/* Relacionadas → abren como nueva pestaña */}
                   {related.length > 0 && (

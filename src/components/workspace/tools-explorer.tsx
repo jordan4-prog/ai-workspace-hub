@@ -8,12 +8,13 @@ import { ToolCard } from "@/components/tool-card";
 import { CATEGORIES, getCategoryLabel } from "@/data/categories";
 import { getPricing, type Pricing } from "@/data/pricing";
 import { TOOLS } from "@/data/tools";
+import { useReviews } from "@/lib/reviews-context";
 import { cn } from "@/lib/utils";
 import type { CategoryId } from "@/types/tool";
 
 type CategoryFilter = CategoryId | "all";
 type PriceFilter = Pricing | "all";
-type Sort = "default" | "az" | "za" | "cat";
+type Sort = "default" | "az" | "za" | "cat" | "rating";
 
 const item: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -31,6 +32,7 @@ export function ToolsExplorer() {
   const [price, setPrice] = useState<PriceFilter>("all");
   const [sort, setSort] = useState<Sort>("default");
   const reduce = useReducedMotion();
+  const { getStats } = useReviews();
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -54,8 +56,14 @@ export function ToolsExplorer() {
             getCategoryLabel(b.categories[0]),
           ) || a.name.localeCompare(b.name),
       );
+    else if (sort === "rating")
+      sorted.sort((a, b) => {
+        const sa = getStats(a.slug);
+        const sb = getStats(b.slug);
+        return sb.avg - sa.avg || sb.count - sa.count;
+      });
     return sorted;
-  }, [query, category, price, sort]);
+  }, [query, category, price, sort, getStats]);
 
   const hasFilters = query !== "" || category !== "all" || price !== "all";
   const clearFilters = () => {
@@ -128,6 +136,7 @@ export function ToolsExplorer() {
               onChange={(v) => setSort(v as Sort)}
               options={[
                 ["default", "Destacadas"],
+                ["rating", "Mejor valoradas"],
                 ["az", "Nombre A–Z"],
                 ["za", "Nombre Z–A"],
                 ["cat", "Por categoría"],

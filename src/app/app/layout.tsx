@@ -4,6 +4,7 @@ import { AppShell } from "@/components/app-shell";
 import { ToolPanel } from "@/components/workspace/tool-panel";
 import { AuthProvider } from "@/lib/auth-context";
 import { CollectionsProvider } from "@/lib/collections-context";
+import { ReviewsProvider } from "@/lib/reviews-context";
 import { WorkspaceProvider } from "@/lib/workspace-context";
 
 /**
@@ -18,12 +19,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
       <CollectionsProvider>
-        <WorkspaceProvider>
-          <AppShell>{children}</AppShell>
-          <Suspense fallback={null}>
-            <ToolPanel />
-          </Suspense>
-        </WorkspaceProvider>
+        <ReviewsProvider>
+          <WorkspaceProvider>
+            <AppShell>{children}</AppShell>
+            <Suspense fallback={null}>
+              <ToolPanel />
+            </Suspense>
+          </WorkspaceProvider>
+        </ReviewsProvider>
       </CollectionsProvider>
     </AuthProvider>
   );
