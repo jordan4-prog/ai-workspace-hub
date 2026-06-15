@@ -21,6 +21,8 @@ interface AuthContextValue {
   enabled: boolean;
   signUp: (email: string, password: string) => Promise<{ error?: string }>;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
+  /** Login con Google (OAuth). Redirige a Google y vuelve a /app. */
+  signInWithGoogle: () => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
 }
 
@@ -60,6 +62,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: error?.message };
   }, []);
 
+  const signInWithGoogle = useCallback(async () => {
+    if (!supabase) return { error: "Autenticación no configurada." };
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/app` },
+    });
+    return { error: error?.message };
+  }, []);
+
   const signOut = useCallback(async () => {
     await supabase?.auth.signOut();
   }, []);
@@ -71,9 +82,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       enabled: isSupabaseConfigured,
       signUp,
       signIn,
+      signInWithGoogle,
       signOut,
     }),
-    [user, loading, signUp, signIn, signOut],
+    [user, loading, signUp, signIn, signInWithGoogle, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
