@@ -16,4 +16,6 @@ export const routes = {
   favorites: "/app/favorites",
   recents: "/app/recents",
   collection: (id: string) => `/app/collections/${id}`,
+  /** Formulario para proponer una herramienta nueva. */
+  submit: "/app/submit",
 } as const;

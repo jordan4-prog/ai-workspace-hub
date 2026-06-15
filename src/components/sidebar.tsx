@@ -7,6 +7,7 @@ import {
   Folders,
   Grid3x3,
   LayoutDashboard,
+  Send,
   Sparkles,
   Star,
   X,
@@ -100,6 +101,19 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
             );
           })}
         </ul>
+
+        <Link
+          href={routes.submit}
+          className={cn(
+            "mt-6 flex items-center gap-3 rounded-lg border border-dashed border-border px-3 py-2.5 text-sm font-medium transition-colors",
+            isActive(routes.submit)
+              ? "border-accent/50 bg-accent-soft text-accent"
+              : "text-fg-muted hover:border-accent/40 hover:text-accent",
+          )}
+        >
+          <Send className="h-4 w-4 shrink-0" aria-hidden />
+          <span className="flex-1 truncate">Enviar herramienta</span>
+        </Link>
       </nav>
     </aside>
   );
