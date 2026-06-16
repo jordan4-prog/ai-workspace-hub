@@ -1,15 +1,8 @@
-import {
-  ArrowRight,
-  Clock,
-  Github,
-  Layers,
-  Search,
-  Sparkles,
-  Star,
-} from "lucide-react";
+import { ArrowRight, Clock, Github, Layers, Search, Star } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { BrandMark } from "@/components/brand-mark";
 import { CategoryIcon } from "@/components/category-icon";
 import { Hero } from "@/components/landing/hero";
 import { LandingStats } from "@/components/landing/landing-stats";
@@ -51,9 +44,7 @@ export default function LandingPage() {
       <header className="sticky top-0 z-30 border-b border-border bg-bg-base/80 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href={routes.home} className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-bg-base">
-              <Sparkles className="h-4 w-4" aria-hidden />
-            </span>
+            <BrandMark className="h-8 w-8 text-accent" />
             <span className="text-sm font-semibold tracking-tight text-fg">
               AI Workspace Hub
             </span>
