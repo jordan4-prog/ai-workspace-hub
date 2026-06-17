@@ -10,7 +10,7 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
 });
 
-const SITE_URL = "https://ai-tools-hub-rho-mocha.vercel.app";
+const SITE_URL = "https://getaitoolshub.com";
 const TITLE = "AI Tools Hub — Todas tus herramientas de IA en un solo lugar";
 const DESCRIPTION =
   "Un único espacio para acceder, organizar y abrir las mejores herramientas de inteligencia artificial. Rápido, minimalista y gratis.";
