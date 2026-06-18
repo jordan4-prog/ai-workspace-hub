@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { getSortedPosts } from "@/data/blog";
 import { CATEGORIES } from "@/data/categories";
 import { TOOLS } from "@/data/tools";
 import { routes } from "@/lib/routes";
@@ -27,7 +28,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    {
+      url: `${SITE_URL}${routes.blog}`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
   ];
+
+  const blogPages: MetadataRoute.Sitemap = getSortedPosts().map((post) => ({
+    url: `${SITE_URL}${routes.post(post.slug)}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
 
   const toolPages: MetadataRoute.Sitemap = TOOLS.map((tool) => ({
     url: `${SITE_URL}${routes.tool(tool.slug)}`,
@@ -43,5 +57,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...toolPages, ...categoryPages];
+  return [...staticPages, ...blogPages, ...toolPages, ...categoryPages];
 }

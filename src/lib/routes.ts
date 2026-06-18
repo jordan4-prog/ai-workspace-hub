@@ -18,4 +18,7 @@ export const routes = {
   collection: (id: string) => `/app/collections/${id}`,
   /** Formulario para proponer una herramienta nueva. */
   submit: "/app/submit",
+  /** Blog público (contenido SEO). */
+  blog: "/blog",
+  post: (slug: string) => `/blog/${slug}`,
 } as const;

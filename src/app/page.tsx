@@ -78,6 +78,12 @@ export default function LandingPage() {
           </Link>
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
+              href={routes.blog}
+              className="hidden rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:text-fg sm:inline"
+            >
+              Blog
+            </Link>
+            <Link
               href={routes.tools}
               className="hidden rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:text-fg sm:inline"
             >
