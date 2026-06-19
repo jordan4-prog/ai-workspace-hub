@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="header">
+      <img src="icons/icon48.png" class="logo" alt="" />
+      <span class="title">AI Tools Hub</span>
+      <button id="open-hub" class="hub-link" type="button">Abrir hub ↗</button>
+    </header>
+
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          d="M21 21l-4.3-4.3M11 18a7 7 0 100-14 7 7 0 000 14z"
+        />
+      </svg>
+      <input
+        id="search"
+        type="text"
+        placeholder="Busca una herramienta de IA…"
+        autocomplete="off"
+        autofocus
+      />
+    </div>
+
+    <ul id="results" class="results"></ul>
+
+    <footer class="footer">
+      <span id="hint">↑↓ para moverte · Enter para abrir</span>
+    </footer>
+
+    <script src="tools.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
