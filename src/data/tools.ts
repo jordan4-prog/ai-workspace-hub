@@ -321,6 +321,15 @@ export const TOOLS: readonly Tool[] = [
     tags: ["notas", "wiki", "productividad"],
   },
   {
+    slug: "remio",
+    name: "Remio",
+    url: "https://remio.ai",
+    description:
+      "Memoria de IA y base de conocimiento local-first para buscar contexto personal en archivos, webs, grabaciones, correos, mensajes, imagenes y notas.",
+    categories: ["productividad", "investigacion"],
+    tags: ["base de conocimiento", "local-first", "documentos"],
+  },
+  {
     slug: "clickup-ai",
     name: "ClickUp AI",
     url: "https://clickup.com/ai",
